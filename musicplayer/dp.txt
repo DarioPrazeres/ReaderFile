@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    #ServerName audioplayer.com  # Altere para o seu domínio, se aplicável
+
+    DocumentRoot /var/www/audioplayer
+
+    WSGIScriptAlias / /var/www/audioplayer/audioplayer/wsgi.py
+    #WSGIPythonPath /var/www/audioplayer
+
+    <Directory /var/www/audioplayer>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    # Configuração dos arquivos estáticos
+    Alias /static/ /var/www/audioplayer/static/
+    <Directory /var/www/audioplayer/static>
+        Require all granted
+    </Directory>
+
+    # Configuração dos arquivos de mídia
+    Alias /media/ /var/www/audioplayer/media/
+    <Directory /var/www/audioplayer/media>
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
