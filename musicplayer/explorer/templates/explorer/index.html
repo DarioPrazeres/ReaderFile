@@ -1,76 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>🎵 Explorador de Músicas</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'explorer/style.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
 </head>
+
 <body>
   <header>
-    <h1>🎧 Explorador de Músicas</h1>
+    <h1><a href="/">🎧 Explorador de Áudios</a></h1>
     <div>Navegando: /{{ subpath }}</div>
+
+    <!-- Formulário de Busca -->
+    <form method="get" action="/">
+      <input type="text" name="q" value="{{ query }}" placeholder="Buscar pastas e áudios..." />
+      <button type="submit"><span class="material-symbols-outlined">search</span></button>
+    </form>
   </header>
 
   <main>
     {% if erro %}
-      <p class="error">{{ erro }}</p>
+    <p class="error">{{ erro }}</p>
     {% endif %}
 
     {% if voltar %}
-      <div class="voltar">
-        <a href="/{{ voltar }}">🔙 Voltar</a>
-      </div>
+    <div class="voltar">
+      <p><a href="/{{ voltar }}">🔙 Voltar</a></p>
+    </div>
     {% endif %}
 
-    <h2>Pastas:</h2>
-    <ul>
-      {% for pasta in pastas %}
-        <li>
-          <span>📁 <a href="/{{ pasta.caminho }}/">{{ pasta.nome }}</a></span>
-        </li>
-      {% empty %}
-        <li><em>Nenhuma pasta encontrada nesta página.</em></li>
-      {% endfor %}
-    </ul>
+    <section class="results">
+      <div id="folders_id">
+        <h2>Pastas:</h2>
+        <ul>
+          {% for pasta in pastas %}
+          <li>
+            <span>📁 <a href="/{{ pasta.caminho }}/">{{ pasta.nome }}</a></span>
+          </li>
+          {% empty %}
+          <li><em>Nenhuma pasta encontrada.</em></li>
+          {% endfor %}
+        </ul>
 
-    {% if p_f.paginator.num_pages > 1 %}
-      <div style="margin-top: 20px; display: flex; gap: 10px;">
-        {% if p_f.has_previous %}
-          <a href="?page_pasta={{ p_f.previous_page_number }}&page_musica={{ p_m.number }}">⬅️ Pastas Anteriores</a>
-        {% endif %}
-        <span>Página de pastas: {{ p_f.number }} de {{ p_f.paginator.num_pages }}</span>
-        {% if p_f.has_next %}
-          <a href="?page_pasta={{ p_f.next_page_number }}&page_musica={{ p_m.number }}">Próximas Pastas ➡️</a>
+        {% if p_f.paginator.num_pages > 1 %}
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+          {% if p_f.has_previous %}
+          <a href="?page_pasta={{ p_f.previous_page_number }}&page_musica={{ p_m.number }}&q={{ query }}">⬅️ Pastas Anteriores</a>
+          {% endif %}
+          <span>Página de pastas: {{ p_f.number }} de {{ p_f.paginator.num_pages }}</span>
+          {% if p_f.has_next %}
+          <a href="?page_pasta={{ p_f.next_page_number }}&page_musica={{ p_m.number }}&q={{ query }}">Próximas Pastas ➡️</a>
+          {% endif %}
+        </div>
         {% endif %}
       </div>
-    {% endif %}
 
-    <h2>Músicas:</h2>
-    <ul>
-      {% for musica in musicas %}
-        <li>
-          <span>🎵 {{ musica.nome }}</span>
-          <div class="audio-container">
-            <audio controls src="/media/{{ musica.caminho }}"></audio>
-          </div>
-        </li>
-      {% empty %}
-        <li><em>Nenhuma música encontrada nesta página.</em></li>
-      {% endfor %}
-    </ul>
+      <div id="audios_id">
+        <h2>Áudios:</h2>
+        <ul>
+          {% for musica in musicas %}
+          <li>
+            <span>🎵 {{ musica.nome }}</span>
+            <div class="audio-container">
+              <audio controls src="/media/{{ musica.caminho }}"></audio>
+              <!--
+              <span>{{musica.date}}</span>-->
+            </div>
+          </li>
+          {% empty %}
+          <li><em>Nenhum áudio encontrada.</em></li>
+          {% endfor %}
+        </ul>
 
-    {% if p_m.paginator.num_pages > 1 %}
-      <div style="margin-top: 20px; display: flex; gap: 10px;">
-        {% if p_m.has_previous %}
-          <a href="?page_pasta={{ p_f.number }}&page_musica={{ p_m.previous_page_number }}">⬅️ Músicas Anteriores</a>
-        {% endif %}
-        <span>Página de músicas: {{ p_m.number }} de {{ p_m.paginator.num_pages }}</span>
-        {% if p_m.has_next %}
-          <a href="?page_pasta={{ p_f.number }}&page_musica={{ p_m.next_page_number }}">Próximas Músicas ➡️</a>
+        {% if p_m.paginator.num_pages > 1 %}
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+          {% if p_m.has_previous %}
+          <a href="?page_pasta={{ p_f.number }}&page_musica={{ p_m.previous_page_number }}&q={{ query }}">⬅️ Músicas Anteriores</a>
+          {% endif %}
+          <span>Página de músicas: {{ p_m.number }} de {{ p_m.paginator.num_pages }}</span>
+          {% if p_m.has_next %}
+          <a href="?page_pasta={{ p_f.number }}&page_musica={{ p_m.next_page_number }}&q={{ query }}">Próximas Músicas ➡️</a>
+          {% endif %}
+        </div>
         {% endif %}
       </div>
-    {% endif %}
+    </section>
   </main>
 </body>
+
 </html>

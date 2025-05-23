@@ -18,13 +18,70 @@ header h1 {
   margin: 0;
   font-size: 1.4rem;
 }
-
-main {
-  padding: 2rem;
-  max-width: 900px;
-  margin: auto;
+header h1 a{
+  text-decoration: none;
+  color: white;
+}
+header h1 a:hover{
+  text-decoration: none;
 }
 
+header form{
+  margin-top: 7px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+}
+header form input{
+  border-radius: 7px;
+  padding: 5px 7px;
+  height: 20px;
+  width: 200px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+header form button{
+  background: none;
+  color: white;
+  margin: 0;
+  padding: 0;
+  padding-top: 3px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-left: 1px black solid;
+}
+
+header form button span{
+  color: #333;
+  cursor: pointer;
+}
+header form input:focus{
+  border: none;
+  outline: none;
+}
+main {
+  padding: 2rem;
+  min-width: 900px;
+}
+#audios_id{
+  width: 65%;
+  padding: 7px;
+}
+#folders_id{
+  width: 30%;
+  padding: 7px;
+}
+.results{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -68,7 +125,67 @@ a:hover {
 }
 
 .voltar {
+  margin: auto;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.voltar p{
+  width: 90%;
+}
+
+/* Estilos gerais para a lista de músicas */
+.musicas-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.musica-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.musica-item:hover {
+  background-color: #efefef;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.musica-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.musica-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.musica-date {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.audio-container {
+  width: 90%;
+}
+
+.audio-player {
+  width: 100%;
+  height: 20px;
+  outline: none;
+  border: 1px solid #ddd;
+  margin-top: 5px;
 }
 
 @media (max-width: 600px) {
@@ -82,3 +199,5 @@ a:hover {
     margin-top: 0.5rem;
   }
 }
+
+
